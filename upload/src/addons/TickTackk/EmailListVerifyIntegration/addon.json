@@ -1,0 +1,26 @@
+{
+    "legacy_addon_id": "",
+    "title": "Email List Verify Integration",
+    "description": "This add-on allows you to enable verify email before they're used in the board.",
+    "version_id": 1000011,
+    "version_string": "1.0.0 Alpha 1",
+    "dev": "TickTackk",
+    "dev_url": "https://xenforo.com/community/members/batpool52.90375/",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": {
+        "Twitter": "https://twitter.com/t1cktackk",
+        "Discord": "https://discord.gg/qdwgUpP"
+    },
+    "require": {
+        "XF": [
+            2001070,
+            "XenForo 2.0.10+"
+        ],
+        "php": [
+            "7.1.0",
+            "PHP 7.1.0+"
+        ]
+    },
+    "icon": "fa-envelope"
+}

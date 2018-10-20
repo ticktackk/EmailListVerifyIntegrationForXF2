@@ -1,0 +1,6 @@
+{
+    "from_class": "XF\\Service\\Contact",
+    "to_class": "TickTackk\\EmailListVerifyIntegration\\XF\\Service\\Contact",
+    "execute_order": 10,
+    "active": true
+}

@@ -1,0 +1,6 @@
+{
+    "from_class": "XF\\CustomField\\Definition",
+    "to_class": "TickTackk\\EmailListVerifyIntegration\\XF\\CustomField\\Definition",
+    "execute_order": 10,
+    "active": true
+}

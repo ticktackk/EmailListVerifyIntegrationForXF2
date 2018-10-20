@@ -1,0 +1,1 @@
+Enter the API key provided in the dashboard.

@@ -1,0 +1,18 @@
+{
+    "edit_format": "checkbox",
+    "edit_format_params": "contact_us = {{ phrase('emailListVerifyIntegration_contact_us_form') }}\naccount_registration = {{ phrase('emailListVerifyIntegration_account_registration') }}\npassword_reset = {{ phrase('emailListVerifyIntegration_password_reset') }}\ncustom_field = {{ phrase('emailListVerifyIntegration_custom_field') }}\nchange_email = {{ phrase('emailListVerifyIntegration_change_email') }}",
+    "data_type": "array",
+    "sub_options": [
+        "contact_us",
+        "account_registration",
+        "password_reset",
+        "custom_field",
+        "change_email"
+    ],
+    "validation_class": "",
+    "validation_method": "",
+    "default_value": "{\"contact_us\":\"1\",\"account_registration\":\"1\",\"password_reset\":\"1\",\"custom_field\":\"1\",\"change_email\":\"1\"}",
+    "relations": {
+        "emailListVerifyIntegration": 10
+    }
+}

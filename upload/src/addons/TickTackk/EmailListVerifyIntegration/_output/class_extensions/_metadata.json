@@ -1,0 +1,20 @@
+{
+    "XF-CustomField-Definition_TickTackk-EmailListVerifyIntegration-XF-CustomField-Definition.json": {
+        "hash": "711eeb60bcad23aeb1ee2b8415aebf4d"
+    },
+    "XF-Entity-User_TickTackk-EmailListVerifyIntegration-XF-Entity-User.json": {
+        "hash": "f0a37983fc4adca83aa76fcb1238ca29"
+    },
+    "XF-Pub-Controller-LostPassword_TickTackk-EmailListVerifyIntegration-XF-Pub-Controller-LostPassword.json": {
+        "hash": "e30f8e76a89634013b1a2bdd6c999e8a"
+    },
+    "XF-Pub-Controller-Register_TickTackk-EmailListVerifyIntegration-XF-Pub-Controller-Register.json": {
+        "hash": "8e026fc635e341b7a0531a7ff5e73a4d"
+    },
+    "XF-Service-Contact_TickTackk-EmailListVerifyIntegration-XF-Service-Contact.json": {
+        "hash": "c7d41b8a8e89cf539d38772cef34c3e8"
+    },
+    "XF-Validator-Email_TickTackk-EmailListVerifyIntegration-XF-Validator-Email.json": {
+        "hash": "5a86c43a22e69b98f4d90e3dd1029a09"
+    }
+}
