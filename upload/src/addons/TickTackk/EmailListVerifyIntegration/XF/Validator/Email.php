@@ -19,7 +19,7 @@ class Email extends XFCP_Email
      *
      * @return bool
      */
-    public function isValid($value, &$errorKey = null) : bool
+    public function isValid($value, &$errorKey = null)
     {
         $isValid = parent::isValid($value, $errorKey);
 

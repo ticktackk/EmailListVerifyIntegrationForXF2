@@ -19,7 +19,7 @@ class Contact extends XFCP_Contact
      *
      * @return bool
      */
-    protected function validateEmail(&$email, &$error = null) :? bool
+    protected function validateEmail(&$email, &$error = null)
     {
         Globals::$useEmailListVerify = $this->app->options()->emailListVerifyIntegrationEnableFor['contact_us'];
 
