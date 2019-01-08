@@ -30,4 +30,22 @@ class Register extends XFCP_Register
             Globals::$emailValidationError = null;
         }
     }
+
+    /**
+     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Redirect
+     */
+    public function actionRegister()
+    {
+        Globals::$useEmailListVerify = $this->options()->emailListVerifyIntegrationEnableFor['account_registration'];
+
+        try
+        {
+            return parent::actionRegister();
+        }
+        finally
+        {
+            Globals::$useEmailListVerify = null;
+            Globals::$emailValidationError = null;
+        }
+    }
 }
