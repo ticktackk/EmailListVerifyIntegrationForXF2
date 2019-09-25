@@ -46,7 +46,7 @@ class ValidateUserEmail extends AbstractRebuildJob
     {
         /** @var ExtendedUserEntity $user */
         $user = $this->app->em()->find('XF:User', $id);
-        if ($user && !$this->validateEmail($user->email))
+        if ($user && $user->user_state === 'valid' && !$this->validateEmail($user->email))
         {
             $user->user_state = 'email_bounce';
             $user->save();
