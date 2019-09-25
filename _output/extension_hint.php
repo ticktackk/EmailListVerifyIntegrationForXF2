@@ -3,6 +3,11 @@
 // ################## THIS IS A GENERATED FILE ##################
 // DO NOT EDIT DIRECTLY. EDIT THE CLASS EXTENSIONS IN THE CONTROL PANEL.
 
+namespace TickTackk\EmailListVerifyIntegration\XF\Admin\Controller
+{
+	class XFCP_Log extends \XF\Admin\Controller\Log {}
+}
+
 namespace TickTackk\EmailListVerifyIntegration\XF\CustomField
 {
 	class XFCP_Definition extends \XF\CustomField\Definition {}

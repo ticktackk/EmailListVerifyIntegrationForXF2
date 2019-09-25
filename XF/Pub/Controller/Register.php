@@ -3,6 +3,9 @@
 namespace TickTackk\EmailListVerifyIntegration\XF\Pub\Controller;
 
 use TickTackk\EmailListVerifyIntegration\Globals;
+use XF\Mvc\Reply\View as ViewReply;
+use XF\Mvc\Reply\Redirect as RedirectReply;
+use XF\Mvc\Reply\Error as ErrorReply;
 
 /**
  * Class Register
@@ -14,7 +17,7 @@ use TickTackk\EmailListVerifyIntegration\Globals;
 class Register extends XFCP_Register
 {
     /**
-     * @return \XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
+     * @return RedirectReply|ViewReply
      */
     public function actionIndex()
     {
@@ -27,12 +30,11 @@ class Register extends XFCP_Register
         finally
         {
             Globals::$useEmailListVerify = null;
-            Globals::$emailValidationError = null;
         }
     }
 
     /**
-     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Redirect
+     * @return ErrorReply|RedirectReply
      */
     public function actionRegister()
     {
@@ -45,7 +47,6 @@ class Register extends XFCP_Register
         finally
         {
             Globals::$useEmailListVerify = null;
-            Globals::$emailValidationError = null;
         }
     }
 }

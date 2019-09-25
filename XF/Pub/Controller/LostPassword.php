@@ -3,6 +3,9 @@
 namespace TickTackk\EmailListVerifyIntegration\XF\Pub\Controller;
 
 use TickTackk\EmailListVerifyIntegration\Globals;
+use XF\Mvc\Reply\Error as ErrorReply;
+use XF\Mvc\Reply\Redirect as RedirectReply;
+use XF\Mvc\Reply\View as ViewReply;
 
 /**
  * Class LostPassword
@@ -14,7 +17,7 @@ use TickTackk\EmailListVerifyIntegration\Globals;
 class LostPassword extends XFCP_LostPassword
 {
     /**
-     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
+     * @return ErrorReply|RedirectReply|ViewReply
      */
     public function actionIndex()
     {
@@ -27,7 +30,6 @@ class LostPassword extends XFCP_LostPassword
         finally
         {
             Globals::$useEmailListVerify = null;
-            Globals::$emailValidationError = null;
         }
     }
 }

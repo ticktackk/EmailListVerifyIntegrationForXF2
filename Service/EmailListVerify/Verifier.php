@@ -2,7 +2,13 @@
 
 namespace TickTackk\EmailListVerifyIntegration\Service\EmailListVerify;
 
+use Exception;
+use GuzzleHttp\Exception\RequestException;
+use TickTackk\EmailListVerifyIntegration\Entity\EmailListVerifyLog as EmailListVerifyLogEntity;
+use XF;
+use XF\PrintableException;
 use XF\Service\AbstractService;
+use XF\App;
 
 /**
  * Class Verifier
@@ -22,15 +28,25 @@ class Verifier extends AbstractService
     protected $apiKey;
 
     /**
+     * @var bool
+     */
+    protected $avoidFromCache;
+
+    /**
+     * @var null|EmailListVerifyLogEntity
+     */
+    protected $emailListVerifyLog;
+
+    /**
      * Verifier constructor.
      *
-     * @param \XF\App     $app
+     * @param App     $app
      * @param string      $email
      * @param string|null $apiKey
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __construct(\XF\App $app, string $email, string $apiKey = null)
+    public function __construct(App $app, string $email, string $apiKey = null)
     {
         parent::__construct($app);
 
@@ -47,9 +63,17 @@ class Verifier extends AbstractService
     }
 
     /**
+     * @param bool|null $avoidFromCache
+     */
+    public function setAvoidFromCache(bool $avoidFromCache = null) : void
+    {
+        $this->avoidFromCache = $avoidFromCache ?: true;
+    }
+
+    /**
      * @param string|null $apiKey
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setApiKey(string $apiKey = null) : void
     {
@@ -60,7 +84,7 @@ class Verifier extends AbstractService
 
         if (empty($apiKey))
         {
-            throw new \Exception('Please enter a valid key.');
+            throw new Exception('Please enter a valid key.');
         }
 
         $this->apiKey = $apiKey;
@@ -75,11 +99,11 @@ class Verifier extends AbstractService
     }
 
     /**
-     * @param null $apiKey
+     * @param string|null $apiKey
      *
      * @return string
      */
-    protected function getEndpointUri(string $apiKey = null) : string
+    protected function getApiEndpointUri(string $apiKey = null) : string
     {
         if ($apiKey === null)
         {
@@ -90,36 +114,69 @@ class Verifier extends AbstractService
     }
 
     /**
-     * @return array
+     * @return EmailListVerifyLogEntity|null
      */
-    protected function getPassedResponses() : array
+    public function getEmailListVerifyLog() :? EmailListVerifyLogEntity
     {
-        return ['all is ok'];
+        return $this->emailListVerifyLog;
     }
 
     /**
      * @param string|null $error
      *
      * @return bool
+     * @throws PrintableException
      */
     public function verify(string &$error = null) : bool
     {
-        $request = $this->app->http()->reader()->getUntrusted($this->getEndpointUri(), [], null, [
-            'timeout' => 5
-        ]);
-
-        if (!$request || $request->getStatusCode() !== 200)
+        if (!$this->avoidFromCache)
         {
-            return false;
+            /** @var EmailListVerifyLogEntity $log */
+            $log = $this->finder('TickTackk\EmailListVerifyIntegration:EmailListVerifyLog')
+                ->where('email', $this->email)
+                ->where('log_date', '>=', XF::$time - 86400)
+                ->order('log_date', 'DESC')
+                ->fetchOne();
+
+            if ($log)
+            {
+                $this->emailListVerifyLog = $log;
+            }
         }
 
-        $response = (string)$request->getBody();
-        if (\in_array($response, $this->getPassedResponses(), true))
+        if (!$this->emailListVerifyLog)
         {
-            return true;
+            $client = $this->app->http()->createClient();
+            $addOns = $this->app->container('addon.cache');
+            $addOnVersion = $addOns['TickTackk\EmailListVerifyIntegration'] ?? 0 >= 1000011;
+
+            try
+            {
+                $request = $client->post($this->getApiEndpointUri(), [
+                    'headers' => [
+                        'XF-TCK-ADDON-VER' => $addOnVersion,
+                    ]
+                ]);
+
+                /** @var EmailListVerifyLogEntity $log */
+                $log = $this->em()->create('TickTackk\EmailListVerifyIntegration:EmailListVerifyLog');
+                $log->email = $this->email;
+                $log->response = $request->getBody()->getContents();
+                $log->save();
+
+                $this->emailListVerifyLog = $log;
+            }
+            catch (RequestException $e)
+            {
+                XF::logException($e, false, "Email Verification failed: {$e->getMessage()} ");
+            }
         }
 
-        $error = $response;
+        if ($this->emailListVerifyLog)
+        {
+            return $this->emailListVerifyLog->isValid($error);
+        }
+
         return false;
     }
 }

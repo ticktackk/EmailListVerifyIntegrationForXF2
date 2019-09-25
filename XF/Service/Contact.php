@@ -30,7 +30,6 @@ class Contact extends XFCP_Contact
         finally
         {
             Globals::$useEmailListVerify = null;
-            Globals::$emailValidationError = null;
         }
     }
 }

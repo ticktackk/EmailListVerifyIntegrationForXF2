@@ -1,0 +1,1 @@
+The destination server allowed us to connect but the SMTP,session was closed before the email was verified

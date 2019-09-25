@@ -1,0 +1,28 @@
+<xf:title>{{ phrase('tckEmailListVerifyIntegration_email_list_verify_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('logs/email-list-verify/refresh', $log) }}" icon="refresh">
+		{{ phrase('tckEmailListVerifyIntegration_refresh') }}
+	</xf:button>
+</xf:pageaction>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('email') }}">{{ $log.email }}</xf:formrow>
+
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$log.log_date}" />
+			</xf:formrow>
+		</div>
+	</div>
+</div>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-header">{{ phrase('tckEmailListVerifyIntegration_response') }}</h2>
+		<div class="block-body block-body--contained block-row" dir="ltr">
+			{{ dump_simple($log.response) }}
+		</div>
+	</div>
+</div>

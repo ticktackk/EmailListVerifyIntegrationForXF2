@@ -1,0 +1,1 @@
+The email server for the whole domain is not installed or is,incorrect, so no emails are deliverable

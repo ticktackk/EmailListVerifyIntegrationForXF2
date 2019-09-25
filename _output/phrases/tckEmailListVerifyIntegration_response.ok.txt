@@ -1,0 +1,1 @@
+All is OK. The server is saying that it is ready to receive a letter to,this address, and no tricks have been detected

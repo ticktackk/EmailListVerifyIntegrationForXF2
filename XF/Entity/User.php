@@ -3,8 +3,6 @@
 namespace TickTackk\EmailListVerifyIntegration\XF\Entity;
 
 use TickTackk\EmailListVerifyIntegration\Globals;
-use XF\Mvc\Entity\Entity;
-use XF\Mvc\Entity\Structure;
 
 /**
  * Class User
@@ -22,28 +20,26 @@ class User extends XFCP_User
      */
     protected function verifyEmail(&$email) : bool
     {
-        Globals::$emailValidationReturnsTrue = true;
+        Globals::$useEmailListVerify = true;
 
         try
         {
-            $result = parent::verifyEmail($email);
+            $isVerified = parent::verifyEmail($email);
 
-            if ($result && !empty(Globals::$emailValidationError))
+
+            /*
+             * need to show better and shorter novice understandable error messages
+             *
+             * if (!$isVerified && Globals::$emailValidationError)
             {
-                $this->error(
-                    \XF::phrase('emailListVerifyIntegration_email_address_you_entered_does_not_exist'),
-                    'email'
-                );
+                $this->error(Globals::$emailValidationError, 'email');
+            }*/
 
-                return false;
-            }
-
-            return $result;
+            return $isVerified;
         }
         finally
         {
-            Globals::$emailValidationReturnsTrue = null;
-            Globals::$emailValidationError = null;
+            Globals::$useEmailListVerify = null;
         }
     }
 }

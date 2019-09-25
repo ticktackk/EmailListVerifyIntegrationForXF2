@@ -2,6 +2,8 @@
 
 namespace TickTackk\EmailListVerifyIntegration;
 
+use XF\Phrase;
+
 /**
  * Class Globals
  *
@@ -15,12 +17,7 @@ class Globals
     public static $useEmailListVerify;
 
     /**
-     * @var null|bool
-     */
-    public static $emailValidationReturnsTrue;
-
-    /**
-     * @var null|array
+     * @var null|Phrase
      */
     public static $emailValidationError;
 

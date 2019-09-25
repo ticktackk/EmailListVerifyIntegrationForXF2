@@ -1,0 +1,1 @@
+The SMTP answer from the server is invalid or the destination server,reported an internal error to us

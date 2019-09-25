@@ -3,6 +3,9 @@
 namespace TickTackk\EmailListVerifyIntegration\XF\Validator;
 
 use TickTackk\EmailListVerifyIntegration\Globals;
+use TickTackk\EmailListVerifyIntegration\Service\EmailListVerify\Verifier as EmailListVerifierSvc;
+use XF\Phrase;
+use XF\PrintableException;
 
 /**
  * Class Email
@@ -14,10 +17,11 @@ use TickTackk\EmailListVerifyIntegration\Globals;
 class Email extends XFCP_Email
 {
     /**
-     * @param string $value
+     * @param $value
      * @param null $errorKey
      *
-     * @return bool
+     * @return bool|null
+     * @throws PrintableException
      */
     public function isValid($value, &$errorKey = null)
     {
@@ -25,12 +29,20 @@ class Email extends XFCP_Email
 
         if ($isValid && Globals::$useEmailListVerify && !$this->options['allow_empty'])
         {
-            /** @var \TickTackk\EmailListVerifyIntegration\Service\EmailListVerify\Verifier $verifier */
+            /** @var EmailListVerifierSvc $verifier */
             $verifier = $this->app->service('TickTackk\EmailListVerifyIntegration:EmailListVerify\Verifier', $value);
             if (!$verifier->verify($error))
             {
-                Globals::$emailValidationError = $error;
-                return Globals::$emailValidationReturnsTrue;
+                if ($error instanceof Phrase)
+                {
+                    $errorKey = $error->getName();
+                }
+                else
+                {
+                    $errorKey = 'tckEmailListVerifyIntegration_response.unknown';
+                }
+
+                return false;
             }
         }
 
