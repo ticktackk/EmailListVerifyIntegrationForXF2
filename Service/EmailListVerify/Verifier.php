@@ -169,6 +169,8 @@ class Verifier extends AbstractService
             catch (RequestException $e)
             {
                 XF::logException($e, false, "Email Verification failed: {$e->getMessage()} ");
+
+                return true;
             }
         }
 
